@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power On — Live at Your Full Scale</title>
+<meta name="description" content="Power On — пространство, в котором человек принимает ответственность за новую роль и начинает жить в масштабе собственной жизни.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:            #ffffff;
+    --bg-warm:       #faf7f2;
+    --ink:           #0f0f10;
+    --ink-soft:      #6e6e73;
+    --ink-faint:     #a8a8ad;
+    --accent:        #c9973f;
+    --accent-soft:   rgba(201,151,63,0.14);
+    --accent-glow:   rgba(201,151,63,0.35);
+    --line:          #e8e5df;
+
+    --serif: 'Fraunces', Georgia, serif;
+    --sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    --section-pad: clamp(6rem, 14vw, 11rem);
+    --edge: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+
+  a{ color:inherit; text-decoration:none; }
+
+  img,svg{ display:block; max-width:100%; }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:4px;
+    border-radius:2px;
+  }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding-left:var(--edge);
+    padding-right:var(--edge);
+  }
+  .narrow{
+    max-width:700px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .section{
+    padding-top:var(--section-pad);
+    padding-bottom:var(--section-pad);
+    position:relative;
+  }
+  .center{ text-align:center; }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+    font-size:.72rem;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:600;
+  }
+
+  h1,h2,h3{
+    font-family:var(--serif);
+    font-weight:500;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+
+  p{
+    color:var(--ink-soft);
+    line-height:1.75;
+    font-weight:300;
+  }
+
+  /* ---------- reveal animation ---------- */
+  [data-reveal]{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 1s cubic-bezier(.16,.8,.24,1), transform 1s cubic-bezier(.16,.8,.24,1);
+  }
+  [data-reveal].in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+  [data-reveal-delay="1"]{ transition-delay:.08s; }
+  [data-reveal-delay="2"]{ transition-delay:.16s; }
+  [data-reveal-delay="3"]{ transition-delay:.24s; }
+  [data-reveal-delay="4"]{ transition-delay:.32s; }
+  [data-reveal-delay="5"]{ transition-delay:.4s; }
+  [data-reveal-delay="6"]{ transition-delay:.48s; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    [data-reveal]{ opacity:1; transform:none; transition:none; }
+    *, *::before, *::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1.4rem var(--edge);
+    mix-blend-mode:normal;
+    background:linear-gradient(to bottom, rgba(255,255,255,.86), rgba(255,255,255,0));
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    transition:padding .4s ease;
+  }
+  .nav-mark{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:1rem;
+    letter-spacing:.02em;
+  }
+  .nav-mark .bolt{
+    color:var(--accent);
+    display:inline-block;
+    transform-origin:center;
+  }
+  .nav-cta{
+    font-size:.82rem;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    padding:.55rem 1.1rem;
+    border:1px solid var(--line);
+    border-radius:999px;
+    transition:border-color .35s ease, color .35s ease, background .35s ease;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{
+    border-color:var(--ink);
+    color:var(--ink);
+    background:var(--bg-warm);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding:8rem var(--edge) 6rem;
+  }
+
+  .hero-glow{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(45% 38% at 50% 34%, var(--accent-soft) 0%, rgba(201,151,63,0) 72%);
+    opacity:0;
+    animation:ignite 2.6s ease-out .2s forwards;
+  }
+  @keyframes ignite{
+    0%{ opacity:0; transform:scale(.85); }
+    100%{ opacity:1; transform:scale(1); }
+  }
+
+  .hero-inner{ position:relative; z-index:1; max-width:900px; }
+
+  .hero-mark{
+    font-size:.78rem;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:500;
+    opacity:0;
+    animation:riseIn .9s cubic-bezier(.16,.8,.24,1) .3s forwards;
+  }
+  .hero-mark .bolt{ color:var(--accent); letter-spacing:0; }
+
+  .hero h1{
+    margin-top:1.6rem;
+    font-size:clamp(2.6rem, 6.4vw, 5.6rem);
+    line-height:1.04;
+    font-weight:500;
+    opacity:0;
+    animation:riseIn 1s cubic-bezier(.16,.8,.24,1) .5s forwards;
+  }
+
+  .hero-ru{
+    margin-top:1.7rem;
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1.3rem, 3vw, 2rem);
+    color:var(--ink-soft);
+    opacity:0;
+    animation:riseIn 1s cubic-bezier(.16,.8,.24,1) .7s forwards;
+  }
+
+  .hero p.lede{
+    margin:2rem auto 0;
+    max-width:540px;
+    font-size:1.05rem;
+    opacity:0;
+    animation:riseIn 1s cubic-bezier(.16,.8,.24,1) .9s forwards;
+  }
+
+  .hero .btn-row{
+    margin-top:3rem;
+    opacity:0;
+    animation:riseIn 1s cubic-bezier(.16,.8,.24,1) 1.1s forwards;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(22px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:2.6rem;
+    left:50%;
+    transform:translateX(-50%);
+    width:1px;
+    height:46px;
+    background:linear-gradient(to bottom, var(--ink-faint), transparent);
+    opacity:0;
+    animation:riseIn 1s ease 1.4s forwards, cueMove 2.2s ease-in-out 2.4s infinite;
+  }
+  @keyframes cueMove{
+    0%,100%{ transform:translateX(-50%) scaleY(1); opacity:.5; }
+    50%{ transform:translateX(-50%) scaleY(.6); opacity:1; }
+  }
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.55em;
+    background:var(--ink);
+    color:#fff;
+    font-family:var(--sans);
+    font-size:.92rem;
+    font-weight:500;
+    letter-spacing:.01em;
+    padding:1.05rem 2.1rem;
+    border-radius:999px;
+    border:1px solid var(--ink);
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:transform .45s cubic-bezier(.16,.8,.24,1), box-shadow .45s ease, background .45s ease, border-color .45s ease;
+    box-shadow:0 0 0 0 var(--accent-glow);
+  }
+  .btn::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(120deg, var(--accent), #e6c07a);
+    opacity:0;
+    transition:opacity .45s ease;
+    z-index:0;
+  }
+  .btn span{ position:relative; z-index:1; display:inline-flex; align-items:center; gap:.55em;}
+  .btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px -8px var(--accent-glow);
+    border-color:var(--accent);
+  }
+  .btn:hover::before{ opacity:1; }
+  .btn:hover span{ color:var(--ink); }
+
+  /* ---------- divider ---------- */
+  .divider{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+    padding:0 var(--edge);
+  }
+  .divider-line{
+    height:1px;
+    background:var(--line);
+    flex:1;
+    max-width:220px;
+    transform:scaleX(0);
+    transform-origin:center;
+    transition:transform 1.1s cubic-bezier(.16,.8,.24,1);
+  }
+  .divider.in-view .divider-line{ transform:scaleX(1); }
+  .divider-dot{
+    width:6px; height:6px;
+    margin:0 1.1rem;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 0 var(--accent-glow);
+    opacity:0;
+    transition:opacity .6s ease .5s, box-shadow 1.6s ease .5s;
+  }
+  .divider.in-view .divider-dot{
+    opacity:1;
+    box-shadow:0 0 14px 2px var(--accent-glow);
+  }
+
+  /* ---------- experience section ---------- */
+  .exp-head{ margin-bottom:3.4rem; }
+  .exp-head h2{ font-size:clamp(2rem,4.2vw,3.1rem); margin-top:1rem; }
+  .exp-head .sub{
+    margin-top:1rem;
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:clamp(1.1rem,2vw,1.4rem);
+    color:var(--ink-soft);
+  }
+
+  .exp-lines{
+    display:flex;
+    flex-direction:column;
+    gap:1.55rem;
+  }
+  .exp-lines p{
+    font-size:clamp(1.05rem,1.7vw,1.25rem);
+    color:var(--ink);
+    font-weight:300;
+    max-width:640px;
+  }
+  .exp-lines p.result{
+    font-family:var(--serif);
+    font-style:italic;
+    color:var(--accent);
+    font-size:clamp(1.15rem,2vw,1.4rem);
+    margin-top:.4rem;
+  }
+  .exp-lines p.scale{
+    font-family:var(--serif);
+    font-weight:500;
+    font-style:normal;
+    color:var(--ink);
+    font-size:clamp(1.4rem,2.6vw,1.9rem);
+    line-height:1.4;
+  }
+
+  /* ---------- stacked word lists ---------- */
+  .word-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .word-item{
+    padding:1.1rem 0;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:baseline;
+    gap:1.2rem;
+  }
+  .word-item:first-child{ border-top:1px solid var(--line); }
+  .word-item .num{
+    font-family:var(--sans);
+    font-size:.78rem;
+    color:var(--ink-faint);
+    letter-spacing:.05em;
+    min-width:1.6rem;
+  }
+  .word-item .word{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(1.5rem,3.6vw,2.5rem);
+    letter-spacing:-0.01em;
+    transition:color .4s ease, transform .4s cubic-bezier(.16,.8,.24,1);
+  }
+  .word-item:hover .word{
+    color:var(--accent);
+    transform:translateX(8px);
+  }
+  .who-closing{
+    margin-top:2.6rem;
+    max-width:480px;
+    font-size:1.05rem;
+  }
+
+  /* ---------- founder ---------- */
+  .founder{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:2.6rem;
+    align-items:start;
+    max-width:760px;
+    margin:0 auto;
+  }
+  .avatar{
+    width:96px; height:96px;
+    border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #f1dcac, var(--accent) 70%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:1.5rem;
+    color:#fff;
+    flex-shrink:0;
+    box-shadow:0 14px 34px -12px var(--accent-glow);
+  }
+  .founder-name{
+    font-size:clamp(1.5rem,2.6vw,2rem);
+    margin-top:.1rem;
+  }
+  .founder-role{
+    color:var(--accent);
+    font-size:.85rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    margin-top:.5rem;
+    font-weight:600;
+  }
+  .founder-quote{
+    margin-top:1.4rem;
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:clamp(1.05rem,1.9vw,1.3rem);
+    color:var(--ink);
+    line-height:1.65;
+    font-weight:400;
+  }
+
+  @media (max-width:560px){
+    .founder{ grid-template-columns:1fr; text-align:left; }
+  }
+
+  /* ---------- question section ---------- */
+  .question{
+    background:var(--bg-warm);
+    text-align:center;
+    position:relative;
+  }
+  .question::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(50% 60% at 50% 40%, var(--accent-soft), transparent 70%);
+    opacity:.6;
+    pointer-events:none;
+  }
+  .question .wrap{ position:relative; }
+  .question-mark{
+    font-size:.75rem;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  .question h2{
+    margin:2rem auto 0;
+    max-width:760px;
+    font-style:italic;
+    font-weight:400;
+    font-size:clamp(1.5rem,4vw,2.6rem);
+    line-height:1.5;
+    color:var(--ink);
+  }
+  .question h2.final{
+    margin-top:1.2rem;
+    color:var(--accent);
+  }
+
+  /* ---------- final CTA ---------- */
+  .final-cta{
+    text-align:center;
+  }
+  .final-cta .btn{ margin-top:2rem; padding:1.2rem 2.5rem; font-size:1rem; }
+  .final-cta .sub-label{
+    margin-top:1.3rem;
+    font-size:.92rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    padding:3rem var(--edge) 3.2rem;
+    text-align:center;
+    border-top:1px solid var(--line);
+  }
+  footer .foot-mark{
+    font-family:var(--serif);
+    font-size:.95rem;
+    color:var(--ink-soft);
+  }
+  footer .foot-mark .bolt{ color:var(--accent); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:720px){
+    .section{ padding-top:4.6rem; padding-bottom:4.6rem; }
+    .hero{ padding-top:7rem; }
+    .word-item{ gap:.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-mark">POWER ON <span class="bolt">⚡</span></div>
+  <a href="#apply" class="nav-cta">Start Your Power On</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-mark">POWER ON <span class="bolt">⚡</span></div>
+    <h1>Live at Your Full Scale</h1>
+    <p class="hero-ru">Включись в масштаб собственной жизни.</p>
+    <p class="lede">Человек начинает жить по-другому в тот момент, когда принимает ответственность за новую роль.</p>
+    <div class="btn-row">
+      <a href="#apply" class="btn"><span>⚡ Start Your Power On</span></a>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"></div>
+</header>
+
+<div class="divider" data-reveal><span class="divider-line"></span><span class="divider-dot"></span><span class="divider-line"></span></div>
+
+<!-- EXPERIENCE -->
+<section class="section">
+  <div class="wrap narrow">
+    <div class="exp-head">
+      <div class="eyebrow" data-reveal>Method</div>
+      <h2 data-reveal>Power On Experience</h2>
+      <p class="sub" data-reveal data-reveal-delay="1">Первая версия метода Power On.</p>
+    </div>
+    <div class="exp-lines">
+      <p data-reveal>Мы создаем пространство, в котором человек принимает ответственность за новую роль.</p>
+      <p data-reveal data-reveal-delay="1">Из новой роли естественно рождаются новые решения.</p>
+      <p data-reveal data-reveal-delay="2">Каждый опыт строится вокруг человека, его целей и его масштаба.</p>
+      <p data-reveal data-reveal-delay="3">Мы используем инструменты, которые усиливают именно этот путь.</p>
+      <p class="result" data-reveal data-reveal-delay="4">Результат один.</p>
+      <p class="scale" data-reveal data-reveal-delay="5">Вы начинаете жить и принимать решения в масштабе собственной жизни.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider" data-reveal><span class="divider-line"></span><span class="divider-dot"></span><span class="divider-line"></span></div>
+
+<!-- FOR WHOM -->
+<section class="section">
+  <div class="wrap narrow">
+    <div class="eyebrow" data-reveal>Audience</div>
+    <h2 style="margin-top:1rem;" data-reveal>Для кого?</h2>
+    <div class="word-list" style="margin-top:2.6rem;">
+      <div class="word-item" data-reveal><span class="num">01</span><span class="word">Предпринимателей.</span></div>
+      <div class="word-item" data-reveal data-reveal-delay="1"><span class="num">02</span><span class="word">Лидеров.</span></div>
+      <div class="word-item" data-reveal data-reveal-delay="2"><span class="num">03</span><span class="word">Создателей.</span></div>
+    </div>
+    <p class="who-closing" data-reveal data-reveal-delay="3">Людей, которые выбирают создавать жизнь в своем масштабе.</p>
+  </div>
+</section>
+
+<div class="divider" data-reveal><span class="divider-line"></span><span class="divider-dot"></span><span class="divider-line"></span></div>
+
+<!-- WHAT IT OPENS -->
+<section class="section">
+  <div class="wrap narrow">
+    <div class="eyebrow" data-reveal>Outcomes</div>
+    <h2 style="margin-top:1rem;" data-reveal>Что открывает Power On?</h2>
+    <div class="word-list" style="margin-top:2.6rem;">
+      <div class="word-item" data-reveal><span class="num">01</span><span class="word">Ясность.</span></div>
+      <div class="word-item" data-reveal data-reveal-delay="1"><span class="num">02</span><span class="word">Свободу.</span></div>
+      <div class="word-item" data-reveal data-reveal-delay="2"><span class="num">03</span><span class="word">Энергию.</span></div>
+      <div class="word-item" data-reveal data-reveal-delay="3"><span class="num">04</span><span class="word">Возможности.</span></div>
+      <div class="word-item" data-reveal data-reveal-delay="4"><span class="num">05</span><span class="word">Партнерство.</span></div>
+      <div class="word-item" data-reveal data-reveal-delay="5"><span class="num">06</span><span class="word">Масштаб жизни, отношений и бизнеса.</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" data-reveal><span class="divider-line"></span><span class="divider-dot"></span><span class="divider-line"></span></div>
+
+<!-- FOUNDER -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow center" style="display:flex;justify-content:center;" data-reveal>Founder</div>
+    <div class="founder" style="margin-top:2.6rem;">
+      <div class="avatar" data-reveal aria-hidden="true">YS</div>
+      <div data-reveal data-reveal-delay="1">
+        <h3 class="founder-name">Yulia Suvorova</h3>
+        <div class="founder-role">Founder of Power On</div>
+        <p class="founder-quote">Я создаю пространство, в котором человек принимает ответственность за новую роль и начинает принимать решения в масштабе собственной жизни.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" data-reveal><span class="divider-line"></span><span class="divider-dot"></span><span class="divider-line"></span></div>
+
+<!-- QUESTION -->
+<section class="section question">
+  <div class="wrap">
+    <div class="question-mark" data-reveal>Один вопрос</div>
+    <h2 data-reveal data-reveal-delay="1">Если бы ты уже жил в масштабе собственной жизни…</h2>
+    <h2 class="final" data-reveal data-reveal-delay="2">Какое решение ты принял бы сегодня?</h2>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section final-cta" id="apply">
+  <div class="wrap">
+    <div class="eyebrow" style="display:flex;justify-content:center;" data-reveal>Power On Experience</div>
+    <a href="#apply" class="btn" data-reveal data-reveal-delay="1"><span>⚡ Start Your Power On</span></a>
+    <p class="sub-label" data-reveal data-reveal-delay="2">Подать заявку на Power On Experience</p>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-mark">POWER ON <span class="bolt">⚡</span></div>
+</footer>
+
+<script>
+  // Scroll-reveal via IntersectionObserver
+  (function(){
+    var items = document.querySelectorAll('[data-reveal]');
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in-view'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.18, rootMargin:'0px 0px -6% 0px' });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Smooth in-page nav focus handling
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var target = document.querySelector(this.getAttribute('href'));
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
