@@ -1,2 +1,302 @@
-# Power-on
-Power On -Live at Your Full Scale 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power On — Live at Your Full Scale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF6EE;
+    --cream-deep:#F3ECDD;
+    --ink:#1C1A16;
+    --ink-soft:#55524A;
+    --gold:#B8935A;
+    --gold-deep:#8F6F3E;
+    --line:#E2D9C6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--cream);color:var(--ink);
+    font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,246,238,0.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;justify-content:space-between;align-items:center;padding:18px 28px;}
+  .logo{font-family:'Playfair Display',serif;font-weight:600;font-size:18px;letter-spacing:0.02em;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ink);color:var(--cream);
+    font-size:14px;font-weight:500;padding:12px 24px;border-radius:999px;
+    text-decoration:none;border:none;cursor:pointer;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .btn:hover{background:var(--gold-deep);transform:translateY(-1px);}
+  .btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:11px 22px;}
+  .btn-outline:hover{background:var(--ink);color:var(--cream);}
+
+  section{padding:100px 0;}
+  .eyebrow{
+    font-size:12px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--gold-deep);font-weight:600;margin-bottom:16px;
+  }
+  .divider{display:flex;align-items:center;gap:12px;margin:0;}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--line);}
+  .divider .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;}
+
+  .hero{padding:90px 0 100px;text-align:center;}
+  .bolt-stage{width:88px;height:88px;margin:0 auto 36px;position:relative;display:flex;align-items:center;justify-content:center;}
+  .bolt-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--line);}
+  .bolt-ring::before{
+    content:'';position:absolute;inset:-1.5px;border-radius:50%;border:1.5px solid var(--gold);
+    animation:charge 1.3s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @keyframes charge{0%{clip-path:inset(0 100% 0 0);}100%{clip-path:inset(0 0 0 0);}}
+  .bolt-icon{font-size:32px;opacity:0;animation:fadeGlow .8s ease forwards 1s;}
+  @keyframes fadeGlow{
+    0%{opacity:0;transform:scale(.7);}
+    60%{opacity:1;transform:scale(1.06);}
+    100%{opacity:1;transform:scale(1);filter:drop-shadow(0 0 12px rgba(184,147,90,.4));}
+  }
+  .hero h1{
+    font-family:'Playfair Display',serif;font-weight:700;
+    font-size:clamp(36px,6vw,54px);line-height:1.12;margin:0 0 20px;
+  }
+  .hero .sub{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:20px;color:var(--ink-soft);max-width:440px;margin:0 auto 14px;
+  }
+  .hero p.body{font-size:16px;color:var(--ink-soft);max-width:440px;margin:0 auto 38px;line-height:1.6;}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  .method h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(28px,4vw,34px);margin:0 0 6px;}
+  .method .tagline{font-family:'Playfair Display',serif;font-style:italic;color:var(--ink-soft);font-size:17px;margin:0 0 32px;}
+  .method p{font-size:16px;line-height:1.75;color:#3a382f;max-width:540px;margin:0 0 16px;}
+  .result-line{margin-top:26px;padding-top:26px;border-top:1px solid var(--line);}
+  .result-line p{
+    font-family:'Playfair Display',serif;font-weight:600;font-size:21px;
+    color:var(--ink);line-height:1.4;max-width:500px;
+  }
+
+  .list-section h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,4vw,30px);margin:0 0 32px;}
+  .items{list-style:none;margin:0;padding:0;}
+  .items li{
+    display:flex;align-items:baseline;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);
+    font-family:'Playfair Display',serif;font-weight:600;font-size:20px;
+    transition:padding-left .25s ease, color .25s ease;
+  }
+  .items li:first-child{border-top:1px solid var(--line);}
+  .items li:hover{padding-left:10px;color:var(--gold-deep);}
+  .items li .num{font-size:12px;color:var(--ink-soft);font-family:'Inter',sans-serif;flex:none;width:20px;}
+  .items .note{margin-top:22px;font-size:15px;color:var(--ink-soft);max-width:470px;}
+
+  .founder{display:flex;gap:24px;align-items:flex-start;}
+  .avatar{
+    width:84px;height:84px;border-radius:50%;flex:none;
+    overflow:hidden;border:2px solid var(--gold);
+  }
+  .avatar img{
+    width:100%;height:100%;object-fit:cover;object-position:center 5%;
+    display:block;
+  }
+  .founder h3{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;margin:0 0 2px;}
+  .founder .role{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:12px;}
+  .founder p{font-size:16px;line-height:1.7;color:#3a382f;max-width:450px;margin:0;}
+
+  .offers{background:var(--cream-deep);}
+  .offer-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:16px;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .offer-card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(28,26,22,0.07);border-color:#d9cba8;}
+  .offer-card.featured{border:1px solid var(--gold);box-shadow:0 14px 34px rgba(184,147,90,0.14);}
+  .offer-tag{
+    display:inline-block;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--gold-deep);background:rgba(184,147,90,0.12);padding:5px 10px;border-radius:999px;margin-bottom:14px;
+  }
+  .offer-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:8px;}
+  .offer-name{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;}
+  .offer-price{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--gold-deep);white-space:nowrap;}
+  .offer-desc{font-size:15px;line-height:1.65;color:var(--ink-soft);margin:0 0 16px;}
+  .offer-cta{font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;}
+  .offer-cta:hover{color:var(--gold-deep);}
+
+  .testimonials h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,4vw,30px);margin:0 0 32px;}
+  .t-card{
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;margin-bottom:16px;
+  }
+  .t-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;line-height:1.6;color:#2b2822;margin:0 0 14px;}
+  .t-author{font-size:13px;color:var(--gold-deep);font-weight:600;}
+  .t-stats{
+    display:flex;gap:22px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap;
+  }
+  .t-stat{font-size:13px;color:var(--ink-soft);}
+  .t-stat b{color:var(--ink);font-family:'Playfair Display',serif;font-size:15px;}
+
+  .question{background:var(--ink);color:var(--cream);text-align:center;}
+  .question .eyebrow{color:#D8B98A;}
+  .question h2{
+    font-family:'Playfair Display',serif;font-weight:700;font-style:italic;
+    font-size:clamp(24px,4.2vw,34px);line-height:1.4;max-width:540px;margin:0 auto 18px;
+  }
+  .question .highlight{color:var(--gold);}
+  .question p.q{font-size:18px;color:#C9C5B8;max-width:420px;margin:0 auto;}
+
+  .final{text-align:center;}
+  .final .apply{display:block;margin-top:14px;font-size:14px;color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;font-size:13px;color:var(--ink-soft);}
+
+  @media (max-width:560px){section{padding:70px 0;} .founder{flex-direction:column;}}
+  @media (prefers-reduced-motion: reduce){
+    .reveal,.bolt-icon,.bolt-ring::before{animation:none !important;transition:none !important;opacity:1 !important;transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">POWER ON ⚡</div>
+    <a class="btn btn-outline" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener">Start Your Power On</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="bolt-stage"><div class="bolt-ring"></div><div class="bolt-icon">⚡</div></div>
+    <h1>Live at Your Full Scale</h1>
+    <p class="sub">Включись в масштаб собственной жизни.</p>
+    <p class="body">Человек начинает жить по-другому в тот момент, когда принимает ответственность за новую роль.</p>
+    <a class="btn" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener">⚡ Start Your Power On</a>
+  </div>
+</section>
+
+<section class="method reveal">
+  <div class="wrap">
+    <div class="eyebrow">Method</div>
+    <h2>Power On Experience</h2>
+    <p class="tagline">Первая версия метода Power On.</p>
+    <p>Мы создаём пространство, в котором человек принимает ответственность за новую роль.</p>
+    <p>Из новой роли естественно рождаются новые решения.</p>
+    <p>Каждый опыт строится вокруг человека, его целей и его масштаба.</p>
+    <p>Мы используем инструменты, которые усиливают именно этот путь.</p>
+    <div class="result-line">
+      <div class="eyebrow">Результат один</div>
+      <p>Вы начинаете жить и принимать решения в масштабе собственной жизни.</p>
+    </div>
+  </div>
+</section>
+
+<section class="list-section reveal">
+  <div class="wrap">
+    <div class="eyebrow">Audience</div>
+    <h2>Для кого?</h2>
+    <ul class="items">
+      <li><span class="num">01</span>Предпринимателей</li>
+      <li><span class="num">02</span>Лидеров</li>
+      <li><span class="num">03</span>Создателей</li>
+    </ul>
+    <p class="note">Людей, которые выбирают создавать жизнь в своём масштабе.</p>
+  </div>
+</section>
+
+<section class="list-section reveal">
+  <div class="wrap">
+    <div class="eyebrow">Outcomes</div>
+    <h2>Что открывает Power On?</h2>
+    <ul class="items">
+      <li><span class="num">01</span>Ясность</li>
+      <li><span class="num">02</span>Свободу</li>
+      <li><span class="num">03</span>Энергию</li>
+      <li><span class="num">04</span>Возможности</li>
+      <li><span class="num">05</span>Партнёрство</li>
+      <li><span class="num">06</span>Масштаб жизни, отношений и бизнеса</li>
+    </ul>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Founder</div>
+    <div class="founder">
+      <div class="avatar"><img src="assets/founder.jpg" alt="Yulia Suvorova"></div>
+      <div>
+        <h3>Yulia Suvorova</h3>
+        <div class="role">Founder of Power On</div>
+        <p>Я создаю пространство, в котором человек принимает ответственность за новую роль и начинает принимать решения в масштабе собственной жизни.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offers reveal">
+  <div class="wrap">
+    <div class="eyebrow">Ways to Begin</div>
+    <h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,4vw,30px);margin:0 0 10px;">С чего начать</h2>
+    <p style="color:var(--ink-soft);font-size:16px;margin:0 0 36px;max-width:470px;">Несколько дверей внутрь метода — от разового разбора до полного погружения.</p>
+
+    <div class="offer-card">
+      <div class="offer-top"><span class="offer-name">Разбор</span><span class="offer-price">$200</span></div>
+      <p class="offer-desc">45–60 минут один на один. Разбираем, что именно тебя тормозит прямо сейчас — и что делать с этим в первую очередь.</p>
+      <a class="offer-cta" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener">Записаться →</a>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-top"><span class="offer-name">Практика вживую</span><span class="offer-price">$250 / чел</span></div>
+      <p class="offer-desc">Офлайн-встреча в малой группе — телесная практика на границе страха, в основе метода Power On.</p>
+      <a class="offer-cta" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener">Узнать даты →</a>
+    </div>
+
+    <div class="offer-card featured">
+      <span class="offer-tag">Самый частый выбор</span>
+      <div class="offer-top"><span class="offer-name">Мини-группа</span><span class="offer-price">$1,500</span></div>
+      <p class="offer-desc">6 недель. Малая группа, сопровождение и личная работа с методом Power On на протяжении всего пути.</p>
+      <a class="offer-cta" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener">Подать заявку →</a>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-top"><span class="offer-name">Индивидуально</span><span class="offer-price">$2,500</span></div>
+      <p class="offer-desc">8 недель личного сопровождения. Полное погружение, темп и глубина — под твой запрос.</p>
+      <a class="offer-cta" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener">Подать заявку →</a>
+    </div>
+  </div>
+</section>
+
+
+  <div class="wrap">
+    <div class="eyebrow">Один вопрос</div>
+    <h2>Если бы ты уже жил в масштабе <span class="highlight">собственной жизни</span>…</h2>
+    <p class="q">Какое решение ты принял бы сегодня?</p>
+  </div>
+</section>
+
+<section class="final reveal">
+  <div class="wrap">
+    <a class="btn" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener" style="font-size:16px;padding:16px 32px;">⚡ Start Your Power On</a>
+    <a class="apply" href="https://ig.me/m/yuliasuvorova_" target="_blank" rel="noopener">Подать заявку на Power On Experience</a>
+  </div>
+</section>
+
+<footer><div class="wrap">POWER ON ⚡ — Live at Your Full Scale</div></footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
